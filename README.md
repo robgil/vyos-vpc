@@ -17,6 +17,11 @@ Essentially, in AWS there is no VRRP or gratuitous ARP. The challenge in AWS is 
 ## Inter VPC Routing / Connectivity
 This is more tricky because AWS only offers 2 peers per region for VPC VPN connectivity. This means you can't have multiple VPCs using the same Router (at least I have not found a way to do this). If there was a way to have multiple tunnels with the same peer, then you could set up multiple EIPs on the same router to use as the CGWs. Unfortunately I don't know of a way to do this on a single router. It is possible to do on separate routers. So essentially you would have two routers per VPC. If you assign separate ASs to each pair of VPC routers, you can do shortest path goodness, especially if you have VPCs in other regions.  
 
+There is a workaround however, but will limit how many VPCs you can configure this way. Basically AWS suggests creating VGWs until you get new ips.
+
+[AWS Docs on VPC Routing](https://aws.amazon.com/articles/5458758371599914)
+
+The other way they suggest is with VRF. If you have the cash, I think the only virtual software router that can do this is the cisco one. 
 
 # Config
 The config.boot file contains an example config for connecting and routing to an Amazon VPC through an IPSec routed tunnel with BGP.
